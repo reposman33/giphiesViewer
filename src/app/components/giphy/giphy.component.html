@@ -1,24 +1,16 @@
-<input #searchText type="text" value="cats" />
+<mat-form-field class="full-width">
+  <mat-label>Zoek iets</mat-label>
+  <input matInput #searchText value="cats" />
+  <button matButton #searchButton>Search</button>
+</mat-form-field>
 
-<button #searchButton>Search</button>
-
-<table mat-table [dataSource]="giphies" #matTable class="mat-elevation-z8">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Id</th>
-    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-  </ng-container>
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
-  </ng-container>
-  <ng-container matColumnDef="url">
-    <th mat-header-cell *matHeaderCellDef>Url</th>
-    <td mat-cell *matCellDef="let element">{{ element.url }}</td>
-  </ng-container>
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef>Type</th>
-    <td mat-cell *matCellDef="let element">{{ element.type }}</td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+<mat-grid-list
+  cols="{{ GRID_COLUMNS_PER_ROW }}"
+  rowHeight="4:5"
+  gutterSize="1rem"
+>
+  <mat-grid-tile *ngFor="let giph of giphies" class="mat-elevation-z8">
+    <img src="{{ giph.images.fixed_height.url }}" alt="" />
+    <mat-grid-tile-footer>{{ giph.title }}</mat-grid-tile-footer>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -7,22 +7,22 @@ import {
 } from '@angular/core';
 import { APIService } from 'src/app/services/api.service';
 import { fromEvent, Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-giphy',
   templateUrl: './giphy.component.html',
-  styleUrls: ['./giphy.component.css'],
+  styleUrls: ['./giphy.component.scss'],
 })
-export class GiphyComponent implements AfterViewInit, OnInit {
-  //  giphs = this.getGiphyData();
-  giphies = [];
-  clicks$: Subscription;
+export class GiphyComponent implements OnInit {
   @ViewChild('searchText', { static: true }) searchText: ElementRef;
   @ViewChild('searchButton', { static: true }) searchButton: ElementRef;
   @ViewChild('matTable', { static: true }) matTable;
-
+  giphies = [];
+  clicks$: Subscription;
+  rows: number = 0;
+  GRID_COLUMNS_PER_ROW: number = 4;
+  GRID_ROWS_PER_PAGE: number = 5;
+  IMAGE_WIDTH_HEIGHT: number = 200;
   // MatTable
   displayedColumns = ['id', 'title', 'url', 'type'];
 
@@ -33,12 +33,8 @@ export class GiphyComponent implements AfterViewInit, OnInit {
     this.clicks$ = fromEvent(
       this.searchButton.nativeElement,
       'click'
-    ).subscribe((res) => {
-      this.retrieveGiphies();
-    });
+    ).subscribe((res) => this.retrieveGiphies());
   }
-
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
     this.clicks$.unsubscribe();
@@ -47,8 +43,13 @@ export class GiphyComponent implements AfterViewInit, OnInit {
   retrieveGiphies() {
     this.getData(this.searchText.nativeElement.value).subscribe((res: []) => {
       this.giphies = res;
-      //this.matTable.renderRows();
+      this.calculateGrid(res);
     });
+  }
+
+  calculateGrid(data: []) {
+    console.log('giphys=', data);
+    this.rows = Math.ceil(data.length / this.GRID_COLUMNS_PER_ROW);
   }
 
   getData(query: string) {

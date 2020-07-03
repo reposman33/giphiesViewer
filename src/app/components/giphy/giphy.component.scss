@@ -1,0 +1,21 @@
+.mat-grid-list {
+  justify-content: center;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.mat-grid-tile {
+  img {
+    cursor: pointer;
+    max-width: 200px;
+  }
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+mat-grid-tile-footer {
+  background-color: red;
+  border-radius: 5px;
+  height: fit-content !important;
+  margin: 10px;
+}
