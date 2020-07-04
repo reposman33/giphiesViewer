@@ -10,6 +10,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 @NgModule({
   declarations: [AppComponent, GiphyComponent],
   imports: [
@@ -21,8 +23,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [BsModalService, BsModalRef],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

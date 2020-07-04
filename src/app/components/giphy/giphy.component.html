@@ -1,16 +1,48 @@
-<mat-form-field class="full-width">
-  <mat-label>Zoek iets</mat-label>
-  <input matInput #searchText value="cats" />
-  <button matButton #searchButton>Search</button>
-</mat-form-field>
+<div class="topBar align-items-center">
+  <div>
+    <label>Zoek iets</label>
+    <input mat-input #searchText />
+  </div>
+  <button type="button" #searchButton class="btn btn-primary">
+    Search
+  </button>
+</div>
 
 <mat-grid-list
   cols="{{ GRID_COLUMNS_PER_ROW }}"
   rowHeight="4:5"
   gutterSize="1rem"
 >
-  <mat-grid-tile *ngFor="let giph of giphies" class="mat-elevation-z8">
+  <mat-grid-tile
+    *ngFor="let giph of giphies"
+    class="mat-elevation-z8"
+    (click)="
+      openModal(modal, {
+        imageSrc: giph.images.original.url,
+        title: giph.title
+      })
+    "
+  >
     <img src="{{ giph.images.fixed_height.url }}" alt="" />
     <mat-grid-tile-footer>{{ giph.title }}</mat-grid-tile-footer>
   </mat-grid-tile>
 </mat-grid-list>
+
+<!-- Modal -->
+
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{ title }}</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img src="{{ imageSrc }}" alt="title" />
+  </div>
+</ng-template>

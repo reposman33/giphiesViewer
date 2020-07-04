@@ -4,9 +4,12 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  TemplateRef,
 } from '@angular/core';
 import { APIService } from 'src/app/services/api.service';
 import { fromEvent, Subscription } from 'rxjs';
+// ngx-bootstrap Modal
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-giphy',
@@ -20,13 +23,17 @@ export class GiphyComponent implements OnInit {
   giphies = [];
   clicks$: Subscription;
   rows: number = 0;
+  title: string;
+  imageSrc: string;
   GRID_COLUMNS_PER_ROW: number = 4;
   GRID_ROWS_PER_PAGE: number = 5;
   IMAGE_WIDTH_HEIGHT: number = 200;
   // MatTable
   displayedColumns = ['id', 'title', 'url', 'type'];
+  // ngx-bootstrao Modal
+  modalRef: BsModalRef;
 
-  constructor(private http: APIService) {}
+  constructor(private http: APIService, private modalService: BsModalService) {}
 
   ngOnInit() {
     this.retrieveGiphies();
@@ -40,11 +47,19 @@ export class GiphyComponent implements OnInit {
     this.clicks$.unsubscribe();
   }
 
+  openModal(templateRef: TemplateRef<any>, options) {
+    this.modalRef = this.modalService.show(templateRef);
+    this.imageSrc = options.imageSrc;
+    this.title = options.title;
+  }
+
   retrieveGiphies() {
-    this.getData(this.searchText.nativeElement.value).subscribe((res: []) => {
-      this.giphies = res;
-      this.calculateGrid(res);
-    });
+    this.getData((this.searchText.nativeElement.value = 'cats')).subscribe(
+      (res: []) => {
+        this.giphies = res;
+        this.calculateGrid(res);
+      }
+    );
   }
 
   calculateGrid(data: []) {
