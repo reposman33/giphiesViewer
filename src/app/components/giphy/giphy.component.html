@@ -18,6 +18,7 @@
     class="mat-elevation-z8"
     (click)="
       openModal(modal, {
+        height: giph.images.original.height,
         imageSrc: giph.images.original.url,
         title: giph.title
       })
@@ -43,6 +44,10 @@
     </button>
   </div>
   <div class="modal-body">
-    <img src="{{ imageSrc }}" alt="title" />
+    <img
+      src="{{ imageSrc }}"
+      height="{{ giph.images.fixed_height.height }}"
+      alt="title"
+    />
   </div>
 </ng-template>
