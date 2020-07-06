@@ -11,9 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
-  declarations: [AppComponent, GiphyComponent],
+  declarations: [AppComponent, GiphyComponent, PaginationComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

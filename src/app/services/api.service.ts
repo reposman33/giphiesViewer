@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,11 +15,24 @@ export class APIService {
 
   constructor(private http: HttpClient) {}
 
-  get(query: string): Observable<Object> {
-    return this.http.get(`${this.url}${query}`, { responseType: 'json' }).pipe(
-      map((res) => res['data']),
-      map((data) => Object.values(data))
-    );
+  get(options: {
+    query: string;
+    limit: number;
+    offset: number;
+  }): Observable<Object> {
+    return this.http
+      .get(
+        `${this.url}${options.query}&limit=${options.limit}&offset=${options.offset}`,
+        {
+          responseType: 'json',
+        }
+      )
+      .pipe(
+        map((res) => ({
+          data: Object.values(res['data']),
+          pagination: res['pagination'],
+        }))
+      );
   }
 
   private handleError(e: HttpErrorResponse) {

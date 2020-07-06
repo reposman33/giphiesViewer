@@ -29,6 +29,15 @@
   </mat-grid-tile>
 </mat-grid-list>
 
+<div class="d-flex m-3 justify-content-end">
+  <app-pagination
+    count="{{ paginationOptions.count }}"
+    offset="{{ paginationOptions.offset }}"
+    total_count="{{ paginationOptions.total_count }}"
+    giphs_per_row:GIPHS_PER_ROW
+    (getDataEvent)="retrieveGiphies($event)"
+  ></app-pagination>
+</div>
 <!-- Modal -->
 
 <ng-template #modal>

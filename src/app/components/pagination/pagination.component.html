@@ -1,0 +1,27 @@
+<p>Toon pagina van {{ total_count }}</p>
+<div class="pagination">
+  <span
+    class="material-icons page-link compress_content d-flex justify-content-center align-items-center"
+  >
+    chevron_left chevron_left
+  </span>
+  <span class="material-icons page-link">
+    chevron_left
+  </span>
+  <span
+    *ngFor="let page of arrayIze(count); let i = index"
+    [ngClass]="{ selected: i === currentPage, 'page-link': true }"
+    data-page-number="{{ i }}"
+    (click)="getPage($event)"
+  >
+    {{ i + 1 }}
+  </span>
+  <span class="material-icons page-link">
+    chevron_right
+  </span>
+  <span
+    class="material-icons page-link compress_content justify-content-center align-items-center"
+  >
+    chevron_right chevron_right
+  </span>
+</div>
