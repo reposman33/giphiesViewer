@@ -1,4 +1,4 @@
-<p>Toon pagina van {{ total_count }}</p>
+<p>Toon pagina {{ selectedPage }} van {{ total_count }}</p>
 <div class="pagination">
   <span
     class="material-icons page-link compress_content d-flex justify-content-center align-items-center"
@@ -10,11 +10,10 @@
   </span>
   <span
     *ngFor="let page of arrayIze(count); let i = index"
-    [ngClass]="{ selected: i === currentPage, 'page-link': true }"
-    data-page-number="{{ i }}"
-    (click)="getPage($event)"
+    [ngClass]="{ selected: firstPage + i === selectedPage, 'page-link': true }"
+    (click)="getPage(firstPage + i)"
   >
-    {{ i + 1 }}
+    {{ firstPage + i }}
   </span>
   <span class="material-icons page-link">
     chevron_right

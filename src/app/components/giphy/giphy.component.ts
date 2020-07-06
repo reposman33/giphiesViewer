@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { APIService } from 'src/app/services/api.service';
 import { fromEvent, Subscription } from 'rxjs';
+//import { MatGridTile } from '@angular/material/grid-list';
 // ngx-bootstrap Modal
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -22,15 +23,15 @@ export class GiphyComponent implements OnInit {
   @ViewChild('pagination', { static: true }) pagination;
 
   giphies = [];
-  clicks$: Subscription;
+  searchButton$: Subscription;
+  getData$: Subscription;
   rows: number = 0;
   title: string;
   imageSrc: string;
   paginationOptions: { count: number; offset: number; total_count: number };
-  GRID_COLUMNS_PER_ROW: number = 4;
+  GRID_GIPHS_PER_ROW: number = 5;
   GRID_ROWS_PER_PAGE: number = 5;
   IMAGE_WIDTH_HEIGHT: number = 200;
-  GIPHS_PER_ROW: number = 4;
   DEFAULT_QUERY: string = 'cats';
   // ngx-bootstrao Modal
   modalRef: BsModalRef;
@@ -40,14 +41,15 @@ export class GiphyComponent implements OnInit {
   ngOnInit() {
     this.paginationOptions = { count: 0, offset: 0, total_count: 0 };
     this.retrieveGiphies();
-    this.clicks$ = fromEvent(
+    this.searchButton$ = fromEvent(
       this.searchButton.nativeElement,
       'click'
     ).subscribe((res) => this.retrieveGiphies());
   }
 
   ngOnDestroy() {
-    this.clicks$.unsubscribe();
+    this.searchButton$.unsubscribe();
+    this.getData$.unsubscribe();
   }
 
   openModal(templateRef: TemplateRef<any>, options) {
@@ -57,19 +59,19 @@ export class GiphyComponent implements OnInit {
   }
 
   retrieveGiphies(offset: number = 0): void {
-    this.getData({
+    this.getData$ = this.getData({
       query: this.searchText.nativeElement.value = this.DEFAULT_QUERY,
-      limit: this.GIPHS_PER_ROW,
+      limit: this.GRID_GIPHS_PER_ROW,
       offset: offset,
     }).subscribe((res: []) => {
       this.giphies = res['data'];
-      this.calculateGrid(res['data']);
+      this.rows = this.calculateGrid(res['data']);
       this.paginationOptions = res['pagination'];
     });
   }
 
   calculateGrid(data: []) {
-    this.rows = Math.ceil(data.length / this.GRID_COLUMNS_PER_ROW);
+    return Math.ceil(data.length / this.GRID_GIPHS_PER_ROW);
   }
 
   getData(options: { query: string; limit: number; offset: number }) {

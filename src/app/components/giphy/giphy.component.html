@@ -9,7 +9,7 @@
 </div>
 
 <mat-grid-list
-  cols="{{ GRID_COLUMNS_PER_ROW }}"
+  cols="{{ GRID_GIPHS_PER_ROW }}"
   rowHeight="4:5"
   gutterSize="1rem"
 >
@@ -34,7 +34,6 @@
     count="{{ paginationOptions.count }}"
     offset="{{ paginationOptions.offset }}"
     total_count="{{ paginationOptions.total_count }}"
-    giphs_per_row:GIPHS_PER_ROW
     (getDataEvent)="retrieveGiphies($event)"
   ></app-pagination>
 </div>
