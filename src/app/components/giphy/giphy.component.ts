@@ -60,7 +60,7 @@ export class GiphyComponent implements OnInit {
 
   retrieveGiphies(offset: number = 0): void {
     this.getData$ = this.getData({
-      query: this.searchText.nativeElement.value = this.DEFAULT_QUERY,
+      query: this.searchText.nativeElement.value || this.DEFAULT_QUERY,
       limit: this.GRID_GIPHS_PER_ROW,
       offset: offset,
     }).subscribe((res: []) => {
