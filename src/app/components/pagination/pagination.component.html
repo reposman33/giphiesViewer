@@ -1,26 +1,40 @@
-<p>Toon pagina {{ selectedPage }} van {{ total_count }}</p>
+<p>Toon pagina {{ selectedPage }} van {{ nrOfPages }}</p>
 <div class="pagination">
-  <span
+  <div
     class="material-icons page-link compress_content d-flex justify-content-center align-items-center"
+    (click)="getPage(1 + (selectedPage - firstPage))"
+    title="Toon eerste {{ nrOfPageButtons }} paginas"
   >
     chevron_left chevron_left
-  </span>
-  <span class="material-icons page-link">
+  </div>
+  <div
+    class="material-icons page-link"
+    (click)="getPage(selectedPage - nrOfPageButtons)"
+    title="Toon vorige {{ nrOfPageButtons }} paginas"
+  >
     chevron_left
-  </span>
-  <span
-    *ngFor="let page of arrayIze(count); let i = index"
+  </div>
+  <div
+    *ngFor="let page of arrayIze(nrOfPageButtons); let i = index"
     [ngClass]="{ selected: firstPage + i === selectedPage, 'page-link': true }"
     (click)="getPage(firstPage + i)"
   >
     {{ firstPage + i }}
-  </span>
-  <span class="material-icons page-link">
+  </div>
+  <div
+    class="material-icons page-link"
+    (click)="getPage(selectedPage + nrOfPageButtons)"
+    title="Toon volgende {{ nrOfPageButtons }} paginas"
+  >
     chevron_right
-  </span>
-  <span
-    class="material-icons page-link compress_content justify-content-center align-items-center"
+  </div>
+  <div
+    class="material-icons page-link compress_content d-flex justify-content-center align-items-center"
+    (click)="
+      getPage(nrOfPages - nrOfPageButtons + (selectedPage - firstPage) + 1)
+    "
+    title="Toon laatste {{ nrOfPageButtons }} paginas"
   >
     chevron_right chevron_right
-  </span>
+  </div>
 </div>
