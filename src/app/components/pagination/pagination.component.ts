@@ -87,7 +87,7 @@ export class PaginationComponent {
       }
     }
     this.lastPage = this.firstPage + this.nrOfPageButtons;
-    const offset = (this.selectedPage - 1) * this.count;
+    const offset = (this.selectedPage - 1) * parseInt(this.count);
     this.getDataEvent.emit(offset);
   }
 }
